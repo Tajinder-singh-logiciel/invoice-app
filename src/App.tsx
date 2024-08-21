@@ -1,26 +1,20 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import Sidebar from "./components/Sidebar";
+import Invoice from "./views/invoice";
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="min-h-screen bg-main-bg flex">
+      <div className="fixed h-full">
+        <Sidebar />
+      </div>
+      <section className="flex-1 px-8 py-12 ml-[width_of_sidebar] overflow-y-auto">
+        <div className="max-w-screen-lg mx-auto">
+          <Invoice />
+        </div>
+      </section>
     </div>
   );
-}
+};
 
 export default App;
