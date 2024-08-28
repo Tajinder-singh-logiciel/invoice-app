@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import "react-toastify/dist/ReactToastify.css";
+
 import IconPlus from "../../../src/assets/icon-plus.svg";
 import { IInvoiceList } from "../../interfaces/InvoiceList";
 import { API_URLS } from "../../configs/urls";
@@ -10,6 +12,7 @@ import AddEditInvoiceForm from "./AddEditInvoiceForm";
 import InvoiceDetails from "./InvoiceDetails";
 import DeleteInvoice from "./DeleteInvoice";
 import FilterDropdown from "../../components/DropDown";
+import { showSuccessMsg } from "../../utils/notifications";
 
 const Invoice = () => {
   const [invoiceList, setInvoiceList] = useState<IInvoiceList[]>([]);
@@ -58,10 +61,12 @@ const Invoice = () => {
     const url = API_URLS.MARK_AS_PAID.replace(":id", selectedInvoice?.id || "");
 
     try {
-      const { status } = await httpPut(url, {});
+      const { status, message } = await httpPut(url, {});
 
       if (status === "success") {
         getInvoiceList();
+
+        showSuccessMsg(message);
       }
     } catch (error) {
       console.error(error);
@@ -72,12 +77,14 @@ const Invoice = () => {
     const url = API_URLS.DELETE_INVOICE + `/${selectedInvoice?.id}`;
 
     try {
-      const { status } = await httpDelete(url);
+      const { status, message } = await httpDelete(url);
 
       if (status === "success") {
         setIsOpenDeleteModal(false);
-        setSelectedInvoice(null);
         getInvoiceList();
+        setSelectedInvoice(null);
+
+        showSuccessMsg(message);
       }
     } catch (error) {
       console.error(error);

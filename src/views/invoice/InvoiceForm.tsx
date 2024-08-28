@@ -5,6 +5,7 @@ import { API_URLS } from "../../configs/urls";
 import { httpPost, httpPut } from "../../utils/http";
 import InputField from "../../components/InputField";
 import clsx from "clsx";
+import { showSuccessMsg } from "../../utils/notifications";
 
 interface IInvoiceForm {
   onClose: () => void;
@@ -286,9 +287,10 @@ const InvoiceForm = ({
     const method = invoiceData?.id ? httpPut : httpPost;
 
     try {
-      const { status } = await method(url, data);
+      const { status, message } = await method(url, data);
 
       if (status === "success") {
+        showSuccessMsg(message);
         refetchData();
         onClose();
       }
