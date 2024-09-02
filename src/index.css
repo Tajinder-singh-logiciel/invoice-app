@@ -19,7 +19,8 @@ code {
 }
 
 .custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
+  height: 5px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {

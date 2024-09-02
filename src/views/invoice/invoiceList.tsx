@@ -12,17 +12,19 @@ const InvoiceLists: React.FC<IInvoiceListProps> = ({
   setSelectedInvoice,
 }) => {
   return (
-    <div className="container mx-auto px-4">
-      <div className="flex flex-col gap-4">
-        {invoices.map((invoice) => (
-          <div
-            key={invoice.id}
-            onClick={() => setSelectedInvoice(invoice)}
-            className="cursor-pointer"
-          >
-            <InvoiceItem invoiceList={invoice} />
-          </div>
-        ))}
+    <div className="mx-auto px-4 overflow-auto custom-scrollbar">
+      <div className="min-w-[800px]">
+        <div className="flex flex-col gap-4">
+          {invoices.map((invoice) => (
+            <div
+              key={invoice.id}
+              onClick={() => setSelectedInvoice(invoice)}
+              className="cursor-pointer"
+            >
+              <InvoiceItem invoiceList={invoice} />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

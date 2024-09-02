@@ -10,9 +10,9 @@ import InvoicesEmptyState from "./InvoicesEmptyState";
 import Drawer from "../../components/Drawer";
 import AddEditInvoiceForm from "./AddEditInvoiceForm";
 import InvoiceDetails from "./InvoiceDetails";
-import DeleteInvoice from "./DeleteInvoice";
 import FilterDropdown from "../../components/DropDown";
 import { showSuccessMsg } from "../../utils/notifications";
+import ConfirmationModal from "../../components/ConfirmationModal";
 
 const Invoice = () => {
   const [invoiceList, setInvoiceList] = useState<IInvoiceList[]>([]);
@@ -21,7 +21,10 @@ const Invoice = () => {
     null
   );
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState<boolean>(false);
+  const [isOpenMarkAsPaidModal, setIsOpenMarkAsPaidModal] =
+    useState<boolean>(false);
   const [status, setStatus] = useState<string>("");
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const getInvoiceList = async () => {
     let url = API_URLS.GET_INVOICE;
@@ -59,37 +62,42 @@ const Invoice = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
 
-  const handleMarkAsPaid = async () => {
-    const url = API_URLS.MARK_AS_PAID.replace(":id", selectedInvoice?.id || "");
+  const handleInvoiceAction = async (
+    action: "delete" | "markAsPaid",
+    invoiceId: string
+  ) => {
+    let url = "";
+    let httpMethod = httpDelete;
+    let successMessage = "";
 
-    try {
-      const { status, message } = await httpPut(url, {});
-
-      if (status === "success") {
-        getInvoiceList();
-
-        showSuccessMsg(message);
-      }
-    } catch (error) {
-      console.error(error);
+    if (action === "delete") {
+      url = API_URLS.DELETE_INVOICE + `/${invoiceId}`;
+      httpMethod = httpDelete;
+      successMessage = "Invoice deleted successfully";
+    } else if (action === "markAsPaid") {
+      url = API_URLS.MARK_AS_PAID.replace(":id", invoiceId);
+      httpMethod = httpPut;
+      successMessage = "Invoice marked as paid successfully";
     }
-  };
 
-  const handleDeleteInvoice = async () => {
-    const url = API_URLS.DELETE_INVOICE + `/${selectedInvoice?.id}`;
-
+    setIsSubmitting(true);
     try {
-      const { status, message } = await httpDelete(url);
+      const { status, message } = await httpMethod(url, {});
 
       if (status === "success") {
-        setIsOpenDeleteModal(false);
+        if (action === "delete") {
+          setIsOpenDeleteModal(false);
+          setSelectedInvoice(null);
+        } else if (action === "markAsPaid") {
+          setIsOpenMarkAsPaidModal(false);
+        }
         getInvoiceList();
-        setSelectedInvoice(null);
-
-        showSuccessMsg(message);
+        showSuccessMsg(successMessage || message);
       }
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -98,16 +106,16 @@ const Invoice = () => {
       {/* Header */}
       {!selectedInvoice && (
         <>
-          <div className="flex items-center justify-between px-8 py-6 bg-main-bg">
-            <div className="text-white text-xs">
-              <h1 className="text-3xl font-semibold">Invoices</h1>
+          <div className="flex flex-wrap items-center justify-between px-4 md:px-8 py-4 md:py-6 bg-main-bg">
+            <div className="text-white text-xs mb-4 md:mb-0">
+              <h1 className="text-2xl md:text-3xl font-semibold">Invoices</h1>
               {invoiceList.length > 0 ? (
                 <p>There are {invoiceList?.length} total invoices</p>
               ) : (
                 <p>No invoices</p>
               )}
             </div>
-            <div className="flex items-center space-x-4">
+            <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
               <FilterDropdown
                 onChange={(value: string) => {
                   setStatus(value);
@@ -143,17 +151,31 @@ const Invoice = () => {
           }}
           onEdit={() => setIsOpenAddEditForm(true)}
           onRemove={() => setIsOpenDeleteModal(true)}
-          onMarkAsPaid={handleMarkAsPaid}
+          onMarkAsPaid={() => setIsOpenMarkAsPaidModal(true)}
         />
       )}
 
-      {isOpenDeleteModal && (
-        <DeleteInvoice
-          onClose={() => setIsOpenDeleteModal(false)}
-          onConfirm={handleDeleteInvoice}
-          id={selectedInvoice?.id || ""}
-        />
-      )}
+      <ConfirmationModal
+        isOpen={isOpenDeleteModal}
+        onClose={() => setIsOpenDeleteModal(false)}
+        onConfirm={() =>
+          handleInvoiceAction("delete", selectedInvoice?.id || "")
+        }
+        title="Confirm Deletion"
+        message={`Are you sure you want to delete invoice #${selectedInvoice?.id}? This action cannot be undone.`}
+        isSubmitting={isSubmitting}
+      />
+
+      <ConfirmationModal
+        isOpen={isOpenMarkAsPaidModal}
+        onClose={() => setIsOpenMarkAsPaidModal(false)}
+        onConfirm={() =>
+          handleInvoiceAction("markAsPaid", selectedInvoice?.id || "")
+        }
+        title="Mark as Paid"
+        message={`Are you sure you want to mark this invoice as paid?`}
+        isSubmitting={isSubmitting}
+      />
 
       <Drawer
         size="sm"
