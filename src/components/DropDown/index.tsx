@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Menu } from "@headlessui/react";
 import ArrowDown from "../../assets/icon-arrow-down.svg";
-import CheckIcon from "../../assets/icon-check.svg";
 
 const FilterDropdown = ({
   onChange,

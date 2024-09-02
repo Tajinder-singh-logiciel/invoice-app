@@ -7,8 +7,6 @@ import { API_URLS } from "../../configs/urls";
 import { httpPost, httpPut } from "../../utils/http";
 import InputField from "../../components/InputField";
 import { showSuccessMsg } from "../../utils/notifications";
-import isValidEmail from "../../utils/isValidEmail";
-import { formatDate } from "date-fns";
 import Button from "../../components/Button";
 
 interface IInvoiceForm {
