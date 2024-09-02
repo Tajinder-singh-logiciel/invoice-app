@@ -5,13 +5,14 @@ interface InputFieldProps {
   type: string;
   id: string;
   name: string;
-  value: string;
+  value: string | number;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   label?: string;
   className?: string;
   placeholder?: string;
   error?: boolean;
   errorMessage?: string;
+  [key: string]: any;
 }
 
 const InputField: React.FC<InputFieldProps> = ({
@@ -25,6 +26,7 @@ const InputField: React.FC<InputFieldProps> = ({
   placeholder,
   error,
   errorMessage,
+  ...rest
 }) => {
   return (
     <div>
@@ -34,20 +36,21 @@ const InputField: React.FC<InputFieldProps> = ({
         </label>
       )}
       <input
+        {...rest}
         type={type}
         id={id}
         name={name}
         value={value}
         onChange={onChange}
         className={clsx(
-          "shadow appearance-none border-1 text-xs focus:border-[#9277ff] rounded w-full py-2 px-3 bg-input-bg leading-tight focus:border focus:outline-none focus:shadow-outline",
+          "shadow appearance-none border text-xs focus:border-[#9277ff] rounded w-full py-3 px-3 bg-input-bg leading-tight focus:border focus:outline-none focus:shadow-outline",
           error ? "border border-red" : "border-transparent",
           className
         )}
         placeholder={placeholder}
       />
       {error && errorMessage && (
-        <p className="text-red-500 text-xs italic mt-1">{errorMessage}</p>
+        <p className="text-red text-end text-xs italic mt-1">{errorMessage}</p>
       )}
     </div>
   );

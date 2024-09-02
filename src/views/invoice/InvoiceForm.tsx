@@ -6,6 +6,7 @@ import { httpPost, httpPut } from "../../utils/http";
 import InputField from "../../components/InputField";
 import clsx from "clsx";
 import { showSuccessMsg } from "../../utils/notifications";
+import isValidEmail from "../../utils/isValidEmail";
 
 interface IInvoiceForm {
   onClose: () => void;
@@ -211,8 +212,8 @@ const InvoiceForm = ({
     if (!invoiceData.clientName) {
       errors.clientName = "Client's name is required";
     }
-    if (!invoiceData.clientEmail) {
-      errors.clientEmail = "Client's email is required";
+    if (!isValidEmail(invoiceData.clientEmail)) {
+      errors.clientEmail = "Please enter a valid email address";
     }
     if (!clientAddress.street) {
       errors.clientAddress.street = "Street address is required";
@@ -314,7 +315,7 @@ const InvoiceForm = ({
         <div className="grid grid-cols-1 gap-4">
           {/* Bill From */}
           <div>
-            <h2 className="text-xs font-bold mb-2 text-purple">Bill From</h2>
+            <h2 className="text-xs font-bold mb-4 text-purple">Bill From</h2>
             <InputField
               type="text"
               id="senderAddressStreet"
@@ -324,6 +325,7 @@ const InvoiceForm = ({
               label="Street Address"
               className="mb-2"
               error={Boolean(errors?.senderAddress?.street)}
+              errorMessage={errors?.senderAddress?.street}
             />
             <div className="flex gap-2 mb-2">
               <InputField
@@ -335,6 +337,7 @@ const InvoiceForm = ({
                 label="City"
                 className="flex-1"
                 error={Boolean(errors?.senderAddress?.city)}
+                errorMessage={errors?.senderAddress?.city}
               />
               <InputField
                 type="text"
@@ -345,6 +348,7 @@ const InvoiceForm = ({
                 label="Post Code"
                 className="flex-1"
                 error={Boolean(errors?.senderAddress?.postCode)}
+                errorMessage={errors?.senderAddress?.postCode}
               />
               <InputField
                 type="text"
@@ -355,13 +359,14 @@ const InvoiceForm = ({
                 label="Country"
                 className="flex-1"
                 error={Boolean(errors?.senderAddress?.country)}
+                errorMessage={errors?.senderAddress?.country}
               />
             </div>
           </div>
 
           {/* Bill To */}
           <div>
-            <h2 className="text-xs font-bold mb-2 text-purple">Bill To</h2>
+            <h2 className="text-xs font-bold mb-4 text-purple">Bill To</h2>
             <InputField
               type="text"
               id="clientName"
@@ -371,6 +376,7 @@ const InvoiceForm = ({
               label="Client's Name"
               className="mb-2"
               error={Boolean(errors?.clientName)}
+              errorMessage={errors?.clientName}
             />
             <InputField
               type="email"
@@ -381,6 +387,7 @@ const InvoiceForm = ({
               label="Client's Email"
               className="mb-2"
               error={Boolean(errors?.clientEmail)}
+              errorMessage={errors?.clientEmail}
             />
             <InputField
               type="text"
@@ -391,6 +398,7 @@ const InvoiceForm = ({
               label="Street Address"
               className="mb-2"
               error={Boolean(errors?.clientAddress?.street)}
+              errorMessage={errors?.clientAddress?.street}
             />
             <div className="flex gap-2 mb-2">
               <InputField
@@ -402,6 +410,7 @@ const InvoiceForm = ({
                 label="City"
                 className="flex-1"
                 error={Boolean(errors?.clientAddress?.city)}
+                errorMessage={errors?.clientAddress?.city}
               />
               <InputField
                 type="text"
@@ -412,6 +421,7 @@ const InvoiceForm = ({
                 label="Post Code"
                 className="flex-1"
                 error={Boolean(errors?.clientAddress?.postCode)}
+                errorMessage={errors?.clientAddress?.postCode}
               />
               <InputField
                 type="text"
@@ -422,6 +432,7 @@ const InvoiceForm = ({
                 label="Country"
                 className="flex-1"
                 error={Boolean(errors?.clientAddress?.country)}
+                errorMessage={errors?.clientAddress?.country}
               />
             </div>
           </div>
@@ -430,34 +441,28 @@ const InvoiceForm = ({
         {/* Invoice Details */}
         <div className="grid grid-cols-2 gap-4 mt-4">
           <div>
-            <h2 className="text-xs font-bold mb-2 text-purple">Invoice Date</h2>
+            <h2 className="text-xs font-normal mb-2">Invoice Date</h2>
             <div className="relative">
-              <input
+              <InputField
                 type="date"
                 id="invoiceDate"
                 name="createdAt"
                 value={invoiceData?.createdAt}
                 onChange={handleInputChange}
-                className={clsx(
-                  errors.createdAt && "border border-red",
-                  "shadow relative text-xs appearance-none rounded w-full py-2 px-3 focus:border-[#9277ff] bg-input-bg leading-tight focus:outline-none focus:shadow-outline focus:border"
-                )}
+                className="flex-1"
+                error={Boolean(errors.createdAt)}
+                errorMessage={errors?.createdAt}
               />
-              {/* <span className="absolute right-4 top-1/2 -translate-y-1/2">
-                <img src={Calendar} alt="Calendar" />
-              </span> */}
             </div>
           </div>
           <div>
-            <h2 className="text-xs font-bold mb-2 text-purple">
-              Payment Terms
-            </h2>
+            <h2 className="text-xs font-normal mb-2">Payment Terms</h2>
             <select
               id="paymentTerms"
               name="paymentTerms"
               value={invoiceData?.paymentTerms}
               onChange={handleInputChange}
-              className="shadow text-xs appearance-none border-[#252945] focus:border-[#9277ff] border-1 rounded w-full py-2 px-3 bg-input-bg leading-tight focus:outline-none focus:shadow-outline focus:border"
+              className="shadow text-xs appearance-none border-[#252945] focus:border-[#9277ff] border border-transparent rounded w-full py-[12px] px-3 bg-input-bg leading-tight focus:outline-none focus:shadow-outline focus:border"
             >
               <option value="1">Net 1 Day</option>
               <option value="7">Net 7 Days</option>
@@ -468,7 +473,7 @@ const InvoiceForm = ({
         </div>
 
         {/* Project Description */}
-        <div className="mt-4">
+        <div className="mt-8">
           <label
             htmlFor="projectDescription"
             className="block text-xs mt-2 mb-1 font-normal"
@@ -481,31 +486,39 @@ const InvoiceForm = ({
             value={invoiceData?.description}
             onChange={handleInputChange}
             className={clsx(
-              errors?.description && "border border-red",
-              "shadow appearance-none text-xs border-[#252945] focus:border-[#9277ff] border-1 rounded w-full py-2 px-3 bg-input-bg leading-tight focus:outline-none focus:shadow-outline focus:border"
+              errors?.description ? "border-red" : "border-transparent",
+              "shadow appearance-none text-xs border-[#252945] border focus:border-[#9277ff]  rounded w-full py-2 px-3 bg-input-bg leading-tight focus:outline-none focus:shadow-outline focus:border"
             )}
           />
+          {errors?.description && (
+            <p className="text-red text-end text-xs italic mt-1">
+              {errors?.description}
+            </p>
+          )}
         </div>
 
         {/* Item List */}
         <div className="mt-4 flex flex-col gap-4">
-          <h2 className="text-xs font-bold mb-2 text-purple">Item List</h2>
+          <h2 className="text-xl font-bold mb-1 text-gray-500">Item List</h2>
           <table className="w-full text-left table-auto">
             <thead>
               <tr>
-                <th className="pr-4 py-2 w-36">Item Name</th>
-                <th className="px-4 py-2 w-24">Qty.</th>
-                <th className="px-4 py-2 w-28">Price</th>
-                <th className="px-4 py-2 w-12">Total</th>
-                <th className="px-4 py-2 w-12"></th>
+                <th className="pr-4 py-2 w-36 font-normal text-xs">
+                  Item Name
+                </th>
+                <th className="px-4 py-2 w-24 font-normal text-xs">Qty.</th>
+                <th className="px-4 py-2 w-28 font-normal text-xs">Price</th>
+                <th className="px-4 py-2 w-12 font-normal text-xs">Total</th>
+                <th className="px-4 py-2 w-12 font-normal text-xs"></th>
               </tr>
             </thead>
             <tbody>
               {items.map((item, index) => (
                 <tr key={index}>
                   <td className="pr-4 py-2">
-                    <input
+                    <InputField
                       type="text"
+                      id="itemName"
                       name="name"
                       value={item?.name}
                       onChange={(e) => {
@@ -519,14 +532,12 @@ const InvoiceForm = ({
                           [`itemName${index}`]: "",
                         });
                       }}
-                      className={clsx(
-                        errors?.[`itemName${index}`] && "border border-red",
-                        "shadow appearance-none text-xs border-[#252945] focus:border-[#9277ff] border-1 rounded w-full py-2 px-3 bg-input-bg leading-tight focus:outline-none focus:shadow-outline focus:border"
-                      )}
+                      error={Boolean(errors?.[`itemName${index}`])}
                     />
                   </td>
                   <td className="px-4 py-2">
-                    <input
+                    <InputField
+                      id="itemQuantity"
                       type="number"
                       name="quantity"
                       value={item?.quantity}
@@ -543,14 +554,12 @@ const InvoiceForm = ({
                           [`itemQuantity${index}`]: "",
                         });
                       }}
-                      className={clsx(
-                        errors?.[`itemQuantity${index}`] && "border border-red",
-                        "shadow appearance-none text-xs border-[#252945] focus:border-[#9277ff] border-1 rounded w-full py-2 px-3 bg-input-bg leading-tight focus:outline-none focus:shadow-outline focus:border"
-                      )}
+                      error={Boolean(errors?.[`itemQuantity${index}`])}
                     />
                   </td>
                   <td className="px-4 py-2">
-                    <input
+                    <InputField
+                      id="itemQuantity"
                       type="number"
                       name="price"
                       value={item?.price}
@@ -566,10 +575,7 @@ const InvoiceForm = ({
                           [`itemPrice${index}`]: "",
                         });
                       }}
-                      className={clsx(
-                        errors?.[`itemPrice${index}`] && "border border-red",
-                        "shadow appearance-none text-xs border-[#252945] focus:border-[#9277ff] border-1 rounded w-full py-2 px-3 bg-input-bg leading-tight focus:outline-none focus:shadow-outline focus:border"
-                      )}
+                      error={Boolean(errors?.[`itemPrice${index}`])}
                     />
                   </td>
                   <td className="px-4 py-2">
