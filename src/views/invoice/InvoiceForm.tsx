@@ -7,6 +7,7 @@ import InputField from "../../components/InputField";
 import clsx from "clsx";
 import { showSuccessMsg } from "../../utils/notifications";
 import isValidEmail from "../../utils/isValidEmail";
+import { formatDate } from "date-fns";
 
 interface IInvoiceForm {
   onClose: () => void;
@@ -110,7 +111,7 @@ const InvoiceForm = ({
 
     setInvoiceData({
       ...invoiceData,
-      [name]: value,
+      [name]: name === "createdAt" ? new Date(value) : value,
     });
   };
 
@@ -447,7 +448,11 @@ const InvoiceForm = ({
                 type="date"
                 id="invoiceDate"
                 name="createdAt"
-                value={invoiceData?.createdAt}
+                value={
+                  (invoiceData?.createdAt &&
+                    formatDate(invoiceData?.createdAt, "yyyy-MM-dd")) ||
+                  ""
+                }
                 onChange={handleInputChange}
                 className="flex-1"
                 error={Boolean(errors.createdAt)}
