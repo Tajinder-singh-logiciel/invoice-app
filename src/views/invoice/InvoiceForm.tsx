@@ -379,7 +379,7 @@ const InvoiceForm: React.FC<IInvoiceForm> = ({
                             placeholder="Qty"
                             min={1}
                             max={99}
-                            className="w-20"
+                            className="max-w-20"
                             error={
                               touched.items?.[index]?.quantity &&
                               (
@@ -395,7 +395,7 @@ const InvoiceForm: React.FC<IInvoiceForm> = ({
                             name={`items.${index}.price`}
                             placeholder="price"
                             min={1}
-                            className="w-20"
+                            className="max-w-20"
                             error={
                               touched.items?.[index]?.price &&
                               (
@@ -441,7 +441,7 @@ const InvoiceForm: React.FC<IInvoiceForm> = ({
                   <Button
                     type="button"
                     onClick={onClose}
-                    className="bg-white hover:bg-gray-100 text-gray-400 text-xs font-bold py-4 px-5 rounded-full focus:outline-none focus:shadow-outline focus:border mr-2"
+                    className="bg-white hover:bg-gray-100 text-gray-400 text-xs font-bold py-4 px-5 rounded-full focus:outline-none focus:shadow-outline mr-2"
                   >
                     Discard
                   </Button>
@@ -450,14 +450,14 @@ const InvoiceForm: React.FC<IInvoiceForm> = ({
                       type="button"
                       onClick={() => handleSubmit(values, true)}
                       isSubmitting={isDraftSaving}
-                      className="bg-gray-400 hover:bg-gray-600 text-white text-xs font-bold py-4 px-5 rounded-full focus:outline-none focus:shadow-outline focus:border mr-2"
+                      className="bg-gray-400 min-w-[120px] hover:bg-gray-600 text-white text-xs font-bold py-4 px-5 rounded-full focus:outline-none focus:shadow-outline mr-2"
                     >
                       Save As Draft
                     </Button>
                     <Button
                       type="submit"
                       isSubmitting={isSubmitting}
-                      className="bg-purple-light min-w-[120px] hover:bg-purple text-white text-xs font-bold py-4 px-5 rounded-full focus:outline-none focus:shadow-outline focus:border"
+                      className="bg-purple-light min-w-[120px] hover:bg-purple text-white text-xs font-bold py-4 px-5 rounded-full focus:outline-none focus:shadow-outline"
                     >
                       Save & Send
                     </Button>
