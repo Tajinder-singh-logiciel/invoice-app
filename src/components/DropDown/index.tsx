@@ -53,13 +53,6 @@ const FilterDropdown = ({
                     />
                     <span className="inline-flex ml-2">{status.name}</span>
                   </div>
-                  {selectedStatus === status.value && (
-                    <img
-                      src={CheckIcon}
-                      className="-mr-1 ml-2 h-5 w-5"
-                      alt="check icon"
-                    />
-                  )}
                 </div>
               )}
             </Menu.Item>

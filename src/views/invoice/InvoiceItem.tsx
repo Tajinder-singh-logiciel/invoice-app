@@ -17,7 +17,7 @@ const InvoiceItem: React.FC<InvoiceItemProps> = (props) => {
     : "";
 
   return (
-    <div className="flex items-center justify-between p-4 text-white rounded-lg bg-drawer-bg mb-2 hover:border-purple-light hover:border">
+    <div className="flex items-center justify-between p-4 text-white rounded-lg bg-drawer-bg mb-2 border border-transparent hover:border-purple-light hover:border">
       <div className="flex items-center justify-between w-full">
         <div className="flex items-center w-[80px] text-left">
           <span className="font-bold text-sm text-grey-blue">#</span>

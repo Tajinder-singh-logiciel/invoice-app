@@ -15,12 +15,6 @@ const InvoicesEmptyState: React.FC = () => {
           and get started
         </p>
       </div>
-
-      {/* <InvoiceList /> */}
-
-      {/* <DeleteInvoice /> */}
-
-      {/* <InvoiceDetails {...invoiceData} /> */}
     </div>
   );
 };
