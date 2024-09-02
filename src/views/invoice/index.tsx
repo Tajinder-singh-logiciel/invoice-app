@@ -53,13 +53,6 @@ const Invoice = () => {
   useEffect(() => {
     getInvoiceList();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    if (status) {
-      getInvoiceList();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
 
   const handleInvoiceAction = async (
