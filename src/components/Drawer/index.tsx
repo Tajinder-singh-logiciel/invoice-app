@@ -34,7 +34,7 @@ const Drawer = ({ isOpen, header, size = "md", footer, children }: IDrawer) => {
         <div className="fixed inset-0 bg-black/60" />
         <div className="fixed inset-0 overflow-hidden">
           <div className="absolute inset-0 overflow-hidden">
-            <div className="pointer-events-none fixed inset-y-0 left-[75px] flex max-w-full sm:pr-16">
+            <div className="pointer-events-none fixed inset-y-0 lg:left-[75px] top-[90px] lg:top-0 left-0 flex max-w-full sm:pr-16">
               <Transition.Child
                 as={Fragment}
                 enter="transform transition ease-in-out duration-500 sm:duration-700"
