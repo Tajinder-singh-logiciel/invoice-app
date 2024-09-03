@@ -11,7 +11,7 @@ const AddEditInvoiceForm = ({
   selectedInvoice: IInvoiceList | null;
 }) => {
   return (
-    <div className="relative px-4 -mt-2 overflow-y-auto grow">
+    <div className="relative overflow-y-auto grow">
       <InvoiceForm
         onClose={onClose}
         refetchData={refetchData}

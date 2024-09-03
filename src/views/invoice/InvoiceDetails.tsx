@@ -89,7 +89,7 @@ const InvoiceDetails: React.FC<InvoiceDetailsProps> = ({
               </h2>
               <p className="text-grey-blue">{description}</p>
             </div>
-            <div className="text-right text-grey-blue">
+            <div className="md:text-right text-grey-blue">
               <p>{senderAddress.street}</p>
               <p>{senderAddress.city}</p>
               <p>{senderAddress.postCode}</p>
@@ -98,31 +98,34 @@ const InvoiceDetails: React.FC<InvoiceDetailsProps> = ({
           </div>
 
           <div className="flex flex-col md:flex-row mt-8">
-            <div className="w-full md:w-60 mb-4 md:mb-0">
-              <div className="mb-6">
-                <h4 className="text-grey-blue mb-4">Invoice Date</h4>
-                <p className="text-xl font-bold">
-                  {getFormattedDate(createdAt)}
-                </p>
+            <div className="flex justify-between">
+              <div className="w-full md:w-60 mb-4 md:mb-0">
+                <div className="mb-6">
+                  <h4 className="text-grey-blue mb-4">Invoice Date</h4>
+                  <p className="text-xl font-bold">
+                    {getFormattedDate(createdAt)}
+                  </p>
+                </div>
+                <div>
+                  <h4 className="text-grey-blue mb-4">Payment Due</h4>
+                  <p className="text-xl font-bold">
+                    {getFormattedDate(paymentDue)}
+                  </p>
+                </div>
               </div>
-              <div>
-                <h4 className="text-grey-blue mb-4">Payment Due</h4>
-                <p className="text-xl font-bold">
-                  {getFormattedDate(paymentDue)}
-                </p>
+              <div className="w-full md:w-72 md:pr-28 mb-4 md:mb-0">
+                <h4 className="text-grey-blue mb-4">Bill To</h4>
+                <p className="text-xl font-bold">{clientName}</p>
+                <p className="text-grey-blue">{clientAddress.street}</p>
+                <p className="text-grey-blue">{clientAddress.city}</p>
+                <p className="text-grey-blue">{clientAddress.postCode}</p>
+                <p className="text-grey-blue">{clientAddress.country}</p>
               </div>
             </div>
-            <div className="w-full md:w-72 md:pr-28 mb-4 md:mb-0">
-              <h4 className="text-grey-blue mb-4">Bill To</h4>
-              <p className="text-xl font-bold">{clientName}</p>
-              <p className="text-grey-blue">{clientAddress.street}</p>
-              <p className="text-grey-blue">{clientAddress.city}</p>
-              <p className="text-grey-blue">{clientAddress.postCode}</p>
-              <p className="text-grey-blue">{clientAddress.country}</p>
-            </div>
+
             <div className="w-full md:w-52">
               <h4 className="text-grey-blue mb-4">Sent to</h4>
-              <p className="text-xl font-bold">{clientEmail}</p>
+              <p className="text-xl font-bold truncate">{clientEmail}</p>
             </div>
           </div>
 
@@ -158,7 +161,7 @@ const InvoiceDetails: React.FC<InvoiceDetailsProps> = ({
                         {item.quantity} x £ {item.price.toFixed(2)}
                       </p>
                     </div>
-                    <p className="font-bold w-1/4 md:w-28 text-right">
+                    <p className="font-bold w-1/4 md:w-28 text-right truncate">
                       £ {item.total.toFixed(2)}
                     </p>
                   </div>
