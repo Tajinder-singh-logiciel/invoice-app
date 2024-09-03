@@ -17,7 +17,7 @@ const InvoiceItem: React.FC<InvoiceItemProps> = (props) => {
     : "";
 
   return (
-    <div className="grid grid-cols-2 md:items-center mb-4 px-6 py-6 text-white rounded-lg shadow-modal bg-drawer-bg border border-transparent hover:border-purple-light hover:border hover:opacity-60 md:grid-cols-6 md:grid-rows-1 md:py-4">
+    <div className="grid grid-cols-2 md:items-center mb-4 px-6 py-6 text-white rounded-lg shadow-modal bg-drawer-bg border border-transparent hover:border-purple-light hover:border md:grid-cols-6 md:grid-rows-1 md:py-4">
       <div className="grid grid-cols-1 justify-between place-items-start md:grid-cols-2 md:col-span-2 md:items-center">
         <p className="font-bold text-base">
           <span className="text-grey-blue">#</span>

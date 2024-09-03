@@ -8,7 +8,7 @@ const App: React.FC = () => {
       <div className="lg:fixed h-full">
         <Sidebar />
       </div>
-      <section className="flex-1 px-8 py-12 lg:ml-0 overflow-y-auto">
+      <section className="flex-1 lg:ml-0 overflow-y-auto">
         <div className="max-w-screen-lg mx-auto">
           <Invoice />
         </div>

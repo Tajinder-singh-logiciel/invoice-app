@@ -40,7 +40,7 @@ const Chip: React.FC<ChipProps> = ({ status }) => {
 
   return (
     <div
-      className={`w-full flex items-center gap-2 justify-center rounded bg-opacity-[0.0571] px-4 py-3 ${bgColor}`}
+      className={`w-full min-w-[104px] max-w-min flex items-center gap-2 justify-center rounded bg-opacity-[0.0571] px-4 py-3 ${bgColor}`}
     >
       <span className={`h-2 w-2 rounded-full ${dotColor}`}></span>
       <span className={`text-sm font-bold capitalize ${textColor}`}>

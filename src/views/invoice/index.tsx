@@ -98,7 +98,7 @@ const Invoice = () => {
     <>
       {/* Header */}
       {!selectedInvoice && (
-        <>
+        <div className="px-8 py-12">
           <div className="flex flex-wrap items-center justify-between px-4 md:px-8 py-4 md:py-6 bg-main-bg">
             <div className="text-white text-xs mb-4 md:mb-0">
               <h1 className="text-2xl md:text-3xl font-semibold">Invoices</h1>
@@ -133,7 +133,7 @@ const Invoice = () => {
           ) : (
             <InvoicesEmptyState />
           )}
-        </>
+        </div>
       )}
 
       {selectedInvoice?.id && (
