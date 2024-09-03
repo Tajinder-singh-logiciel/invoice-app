@@ -43,7 +43,7 @@ const initialInvoice: IInvoiceList = {
     },
   ],
   total: 0,
-  createdAt: "",
+  createdAt: new Date().toISOString().split("T")[0],
   paymentDue: "",
 };
 
@@ -93,7 +93,7 @@ const InvoiceForm: React.FC<IInvoiceForm> = ({
         ...selectedInvoice,
         createdAt: selectedInvoice.createdAt
           ? new Date(selectedInvoice.createdAt).toISOString().split("T")[0]
-          : "",
+          : new Date().toISOString().split("T")[0],
       }
     : initialInvoice;
 
