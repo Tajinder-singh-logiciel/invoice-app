@@ -33,3 +33,15 @@ code {
   background-color: rgb(230 231 231 / var(--tw-bg-opacity));
   border-radius: 999px;
 }
+
+/* Hide arrows in Webkit browsers */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Hide arrows in Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
