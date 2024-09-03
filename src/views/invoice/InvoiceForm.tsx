@@ -8,6 +8,7 @@ import { httpPost, httpPut } from "../../utils/http";
 import InputField from "../../components/InputField";
 import { showSuccessMsg } from "../../utils/notifications";
 import Button from "../../components/Button";
+import clsx from "clsx";
 
 interface IInvoiceForm {
   onClose: () => void;
@@ -362,66 +363,114 @@ const InvoiceForm: React.FC<IInvoiceForm> = ({
                             className="flex w-full flex-col sm:flex-row sm:items-center gap-2 mb-2"
                           >
                             <div className="flex [&>div]:w-full">
-                              <Field
-                                as={InputField}
-                                name={`items.${index}.name`}
-                                placeholder="Item name"
-                                className="w-full sm:max-w-[150px]"
-                                error={
-                                  touched.items?.[index]?.name &&
-                                  (
-                                    errors.items as FormikErrors<
-                                      typeof initialInvoice.items
-                                    >
-                                  )?.[index]?.name
-                                }
-                              />
+                              <div>
+                                <label
+                                  className={clsx(
+                                    index === 0 ? "sm:block" : "sm:hidden",
+                                    "text-xs mt-2 mb-1 font-normal"
+                                  )}
+                                >
+                                  Item Name
+                                </label>
+                                <Field
+                                  as={InputField}
+                                  name={`items.${index}.name`}
+                                  placeholder="Item name"
+                                  className="w-full sm:max-w-[150px]"
+                                  error={
+                                    touched.items?.[index]?.name &&
+                                    (
+                                      errors.items as FormikErrors<
+                                        typeof initialInvoice.items
+                                      >
+                                    )?.[index]?.name
+                                  }
+                                />
+                              </div>
                             </div>
                             <div className="flex gap-2 items-center">
-                              <Field
-                                as={InputField}
-                                type="number"
-                                name={`items.${index}.quantity`}
-                                placeholder="Qty"
-                                min={1}
-                                className="max-w-24"
-                                error={
-                                  touched.items?.[index]?.quantity &&
-                                  (
-                                    errors.items as FormikErrors<
-                                      typeof initialInvoice.items
-                                    >
-                                  )?.[index]?.quantity
-                                }
-                              />
-                              <Field
-                                as={InputField}
-                                type="number"
-                                name={`items.${index}.price`}
-                                placeholder="price"
-                                min={1}
-                                className="max-w-24"
-                                error={
-                                  touched.items?.[index]?.price &&
-                                  (
-                                    errors.items as FormikErrors<
-                                      typeof initialInvoice.items
-                                    >
-                                  )?.[index]?.price
-                                }
-                              />
-                              <div className="w-28 truncate">
-                                {(item.quantity * item.price).toFixed(2)}
-                              </div>
-                              <div
-                                onClick={() => remove(index)}
-                                className="w-8 h-8 flex justify-end items-center"
-                              >
-                                <img
-                                  src={Delete}
-                                  alt="Delete"
-                                  className="w-4 h-5"
+                              <div>
+                                <label
+                                  className={clsx(
+                                    index === 0 ? "sm:block" : "sm:hidden",
+                                    "text-xs mt-2 mb-1 font-normal"
+                                  )}
+                                >
+                                  Qty.
+                                </label>
+                                <Field
+                                  as={InputField}
+                                  type="number"
+                                  name={`items.${index}.quantity`}
+                                  placeholder="Qty"
+                                  min={1}
+                                  className="max-w-24"
+                                  error={
+                                    touched.items?.[index]?.quantity &&
+                                    (
+                                      errors.items as FormikErrors<
+                                        typeof initialInvoice.items
+                                      >
+                                    )?.[index]?.quantity
+                                  }
                                 />
+                              </div>
+                              <div>
+                                <label
+                                  className={clsx(
+                                    index === 0 ? "sm:block" : "sm:hidden",
+                                    "text-xs mt-2 mb-1 font-normal"
+                                  )}
+                                >
+                                  Price
+                                </label>
+                                <Field
+                                  as={InputField}
+                                  type="number"
+                                  name={`items.${index}.price`}
+                                  placeholder="price"
+                                  min={1}
+                                  className="max-w-24"
+                                  error={
+                                    touched.items?.[index]?.price &&
+                                    (
+                                      errors.items as FormikErrors<
+                                        typeof initialInvoice.items
+                                      >
+                                    )?.[index]?.price
+                                  }
+                                />
+                              </div>
+                              <div>
+                                <label
+                                  className={clsx(
+                                    index === 0 ? "sm:block" : "sm:hidden",
+                                    "text-xs mt-2 mb-1 font-normal"
+                                  )}
+                                >
+                                  Total
+                                </label>
+                                <div className="w-28 truncate py-2">
+                                  {(item.quantity * item.price).toFixed(2)}
+                                </div>
+                              </div>
+                              <div>
+                                <div
+                                  className={clsx(
+                                    index === 0 ? "sm:block" : "sm:hidden",
+                                    "text-xs pb-6 font-normal"
+                                  )}
+                                />
+                                <div
+                                  onClick={() => remove(index)}
+                                  className="flex justify-end self-end cursor-pointer"
+                                >
+                                  <img
+                                    src={Delete}
+                                    alt="Delete"
+                                    className="w-4 h-5"
+                                  />
+                                </div>
                               </div>
                             </div>
                           </div>
